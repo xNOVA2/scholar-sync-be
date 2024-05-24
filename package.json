@@ -1,0 +1,37 @@
+{
+  "name": "Scholars-Sync-api",
+  "version": "1.0.0",
+  "description": "Scholars-Sync-api",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "aliusaid55@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "@google-apps/meet": "^0.2.0",
+    "@google-cloud/local-auth": "^2.1.0",
+    "bcrypt": "^5.1.0",
+    "cloudinary": "^2.0.2",
+    "colors": "^1.4.0",
+    "cookie-session": "^2.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-rate-limit": "^7.1.5",
+    "joi": "^17.12.1",
+    "jsonwebtoken": "^9.0.2",
+    "moment": "^2.29.4",
+    "mongoose": "^8.0.3",
+    "mongoose-aggregate-paginate-v2": "^1.0.6",
+    "mongoose-paginate-v2": "^1.7.1",
+    "multer": "^1.4.5-lts.1",
+    "request-ip": "^3.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}
