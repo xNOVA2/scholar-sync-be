@@ -21,9 +21,7 @@ const {email} = req.body
     let imageURL = await uploadOnCloudinary(req.files?.profileImage[0].path);
 
     req.body.profileImage = imageURL.secure_url;
-    // create user in db
     let user = await createUser(req.body);
-    // remove password
     user = user.toObject();
     delete user.password;
 
@@ -35,6 +33,7 @@ export const login = asyncHandler(async (req, res, next) => {
 
     let user = await findUser({ email: req.body.email })
 
+    console.log(user);
     if (!user) return next({
         statusCode: STATUS_CODES.BAD_REQUEST,
         message: 'Invalid email or password'

@@ -9,7 +9,6 @@ export default class UserAPI {
         this.router = Router();
         this.setupRoutes();
     }
-
     setupRoutes() {
         const router = this.router;
         router.get('/', fetchAllUsers);

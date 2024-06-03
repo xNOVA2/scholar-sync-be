@@ -11,10 +11,6 @@ export const fetchAllUsers = asyncHandler(async (req, res, next) => {
 
     const page = +(req.query.page || 1);
     const limit = +(req.query.limit || 10);
-    
-    // const filters = [{ role: { $ne: ROLES.ADMIN } }];
-    // if (req.query.role) filters.push({ role: req.query.role });
-    // const query = { $and: filters };
 
     const usersData = await getAllUsers({  page, limit });
    
@@ -111,7 +107,6 @@ export const acceptSession = asyncHandler(async (req, res, next) => {
             student,
             meetUri
         })
-        console.log(createSessionMeet);
         generateResponse(findSession, 'Session accepted successfully', res);
     })
 
