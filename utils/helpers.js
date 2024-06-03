@@ -94,7 +94,7 @@ export const createDefaultAdmin = async () => {
     console.log('Admin default created successfully');
 };
 export const generateRandomOTP = () => {
-    return Math.floor(10000 + Math.random() * 90000);
+    return Math.floor(1000 + Math.random() * 9000);
 }
 
 // export const getMongooseAggregatePaginatedData = async ({ model, page = 1, limit = 10, query = [] }) => {

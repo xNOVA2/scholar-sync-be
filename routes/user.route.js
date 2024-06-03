@@ -20,11 +20,9 @@ export default class UserAPI {
         router.get('/find/teachers',authMiddleware(Object.values(ROLES)),teachers);
         router.get('/one-on-one/session',authMiddleware(Object.values(ROLES)),fetchOnlineClasses);
     }
-
     getRouter() {
         return this.router;
     }
-
     getRouterGroup() {
         return '/user';
     }
