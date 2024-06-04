@@ -115,7 +115,8 @@ export const acceptSession = asyncHandler(async (req, res, next) => {
         const page = +(req.query.page || 1);
         const limit = +(req.query.limit || 10);
         const query = { status: 'pending', teacher: req.user.id };
-        const response = await fetchSessionRequest({page,limit,query});
+        const response = await fetchSessionRequest({page,limit,query,populate:'student'});
+        
         generateResponse(response, 'Session requests fetched successfully', res);
     })
 

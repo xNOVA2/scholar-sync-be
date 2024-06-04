@@ -37,12 +37,13 @@ const SessionRequest = mongoose.model('SessionRequest', sessionRequestSchema);
 export const createSessionRequest = (obj) => SessionRequest.create(obj);
 export const fetchOneSessionRequest = (query) => SessionRequest.findOne(query);
 
-export const fetchSessionRequest  = async ({ query, page, limit }) => {
+export const fetchSessionRequest  = async ({ query, page, limit,populate }) => {
     const { data, pagination } = await getMongoosePaginatedData({
         model: SessionRequest,
         query:   {...query},
         page,
         limit,
+        populate
     });
 
     return { data, pagination };
