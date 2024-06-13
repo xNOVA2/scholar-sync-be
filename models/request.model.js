@@ -12,6 +12,10 @@ const sessionRequestSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user',
     },
+    subject:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'subject',
+    },
     startTime: {
         type: String,
     },

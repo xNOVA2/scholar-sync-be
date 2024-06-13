@@ -4,6 +4,7 @@ import AuthAPI from './auth.route.js';
 import SubjectAPI from './subject.route.js';
 import MeetAPI from './meet.route.js';
 import UserAPI from './user.route.js';
+import TeacherAPI from './teacher.route.js';
 // import UserAPI from './user.route.js';
 
 export default class API {
@@ -19,6 +20,8 @@ export default class API {
         this.routeGroups.push(new SubjectAPI());
         this.routeGroups.push(new MeetAPI())
         this.routeGroups.push(new UserAPI());
+        this.routeGroups.push(new TeacherAPI());
+
     }
 
     setContentType(req, res, next) {

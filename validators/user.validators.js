@@ -15,6 +15,7 @@ const requestOneOnOneValidator = Joi.object({
     teacher: Joi.string().required(),
     startTime: Joi.string().required(),
     endTime: Joi.string().required(),
+    subject: Joi.string().required(),
 
 });
 export const requestOneOnOneValidation = validateRequest(requestOneOnOneValidator);

@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { ROLES } from '../utils/constants.js';
 import { authMiddleware } from '../middlewares/index.js';
-import {  acceptSession, fetchAllUsers, fetchOnlineClasses, notification, rejectSession, requestSessionOneOnOne, sessionRequests, teachers } from '../controllers/index.js';
+import {  acceptSession, fetchAllUsers, fetchOnlineClasses, findUsersClasses, notification, rejectSession, requestSessionOneOnOne, sessionRequests, teachers } from '../controllers/index.js';
 import { requestOneOnOneValidation } from '../validators/user.validators.js';
 
 export default class UserAPI {
@@ -17,8 +17,9 @@ export default class UserAPI {
         router.post('/request-session', authMiddleware(Object.values(ROLES)),requestOneOnOneValidation,requestSessionOneOnOne);
         router.put('/accept-session', authMiddleware(ROLES.TEACHER),acceptSession);
         router.put('/reject-session', authMiddleware(ROLES.TEACHER),rejectSession);
-        router.get('/find/teachers',authMiddleware(Object.values(ROLES)),teachers);
+        router.get('/find/teachers',authMiddleware(Object.values(ROLES)),teachers);findUsersClasses
         router.get('/one-on-one/session',authMiddleware(Object.values(ROLES)),fetchOnlineClasses);
+        router.get('/class/session',authMiddleware(Object.values(ROLES)),findUsersClasses);
     }
     getRouter() {
         return this.router;

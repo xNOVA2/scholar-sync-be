@@ -26,6 +26,10 @@ const meetSessionSchema = new mongoose.Schema({
         type:Boolean,
         default:false
     },
+    subject:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'subject',
+    },
     student:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user',

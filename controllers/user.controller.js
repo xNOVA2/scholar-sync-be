@@ -90,14 +90,13 @@ export const acceptSession = asyncHandler(async (req, res, next) => {
         findSession.status = 'accepted';
         await findSession.save();            
 
-     
-
         const teacher = req.user.id;
         const startTime = findSession.startTime;
         const endTime = findSession.endTime;
         const oneOnOne = true;
         const student = findSession.student;
         const meetUri = await createSession(req,res,next);
+        const subject = findSession.subject;
 
         const createSessionMeet = await createMeetSession({
             teacher,
@@ -105,12 +104,12 @@ export const acceptSession = asyncHandler(async (req, res, next) => {
             endTime,
             oneOnOne,
             student,
-            meetUri
+            meetUri,
+            subject
         })
-        generateResponse(findSession, 'Session accepted successfully', res);
-    })
 
-    // Teacher Requests
+        generateResponse(createSessionMeet, 'Session accepted successfully', res);
+    })
     export const sessionRequests = asyncHandler(async (req, res, next) => {
         const page = +(req.query.page || 1);
         const limit = +(req.query.limit || 10);
@@ -132,13 +131,11 @@ export const acceptSession = asyncHandler(async (req, res, next) => {
                 statusCode: STATUS_CODES.BAD_REQUEST,
             });
         }
-    
         // Ensure teacherClass and subject are arrays if they are expected to be arrays in the user model
         const classQuery = Array.isArray(teacherClass) ? { $in: teacherClass } : { $in: [teacherClass] };
         const subjectQuery = Array.isArray(subject) ? { $in: subject } : { $in: [subject] };
     
         const query = { role: 'teacher', class: classQuery, subjects: subjectQuery };
-    
             const users = await getAllUsers({ page, limit, query });
             generateResponse(users, 'Teachers fetched successfully', res);
       
@@ -148,26 +145,53 @@ export const acceptSession = asyncHandler(async (req, res, next) => {
 
         const teacher = req.query.teacher || false;
         const student =req.query.student || false;
-
+        const oneOnOne = req.query.oneOnOne || true;
         let query = {}
 
         if(student){
             query={student:req.user.id}
         }
-        
         if(teacher){
             query = {teacher:req.user.id}
         }
-
-        query = {...query,oneOnOne:true}
-        const data = await findMeetSession(query).sort({createdAt:-1});
+        query = {...query,oneOnOne}
+        const data = await findMeetSession(query).sort({createdAt:-1}).populate('subject');
         generateResponse(data, 'Online classes fetched successfully', res);
     });
 
+    export const findUsersClasses = asyncHandler(async (req, res, next) => {
+        const user = await findUser({ _id: req.user.id });
 
+        let query = {}
+        query = {class:user.class[0]}
+        const data = await findMeetSession(query).sort({createdAt:-1}).populate('subject');
+        generateResponse(data, 'Online classes fetched successfully', res);
+    })
 export const updateUser = asyncHandler(async (req, res, next) => {
-    
     const user = await updateUser(req.body);
-    
     generateResponse(user, 'User updated successfully', res);
+});
+
+export const liveClass = asyncHandler(async (req, res, next) => {
+    req.body.startDate = new Date();
+    req.body.endDate = new Date(
+        new Date().setMinutes(new Date().getMinutes() + 30)
+);
+    req.body.teacher = req.user.id;
+    req.body.oneOnOne = false;
+    const findTeacher = await findUser({ _id: req.user.id });
+    req.body.subject = findTeacher.subjects[0];
+    req.body.meetUri = await createSession(req,res,next);
+    const session = await createMeetSession(req.body);
+    generateResponse(session, 'User fetched successfully', res);
+});
+
+export const scheduleClass = asyncHandler(async (req, res, next) => {
+    req.body.teacher = req.user.id;
+    req.body.oneOnOne = false;
+    const findTeacher = await findUser({ _id: req.user.id });
+    req.body.subject = findTeacher.subjects[0];
+    req.body.meetUri = await createSession(req,res,next);
+    const session = await createMeetSession(req.body);
+    generateResponse(session, 'session created successfully', res);
 });
