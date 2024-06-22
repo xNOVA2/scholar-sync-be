@@ -83,3 +83,5 @@ export const getAllUsers = async ({ query, page, limit }) => {
     return { data, pagination };
 };
 
+
+export const updateUser = (query, update) => UserModel.findOneAndUpdate(query, update)

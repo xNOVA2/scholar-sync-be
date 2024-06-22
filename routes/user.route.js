@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { ROLES } from '../utils/constants.js';
 import { authMiddleware } from '../middlewares/index.js';
-import {  acceptSession, fetchAllUsers, fetchOnlineClasses, findUsersClasses, notification, rejectSession, requestSessionOneOnOne, sessionRequests, teachers } from '../controllers/index.js';
+import {  acceptSession, fetchAllUsers, fetchOnlineClasses, findUsersClasses, notification, rejectSession, requestSessionOneOnOne, sessionRequests, teachers, updateUsers } from '../controllers/index.js';
 import { requestOneOnOneValidation } from '../validators/user.validators.js';
 
 export default class UserAPI {
