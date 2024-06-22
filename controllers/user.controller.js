@@ -22,7 +22,7 @@ export const fetchAllUsers = asyncHandler(async (req, res, next) => {
 
 // get current user
 export const getUser = asyncHandler(async (req, res, next) => {
-  const user = await findUser({ _id: req.params.userId });
+  const user = await findUser({ _id: req.params.userId }).lean()
   generateResponse(user, "User fetched successfully", res);
 });
 
@@ -58,7 +58,7 @@ export const notification = asyncHandler(async (req, res, next) => {
     query.teacher = req.user.id;
   }
 
-  const response = await fetchSessionRequest({ limit, page, query,populate:"teacher"})
+  const response = await fetchSessionRequest({ limit, page, query,populate:["teacher","student"] });
   generateResponse(response, "Notification fetched successfully", res);
 });
 
